@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/static/css/book.css">
+    <link rel="stylesheet" href="/static/popup/popup.css">
+
+</head>
+
+<body>
+<div class="main">
+
+    <div class="container">
+        <div class="booking-content">
+            <div class="booking-image">
+                <img class="booking-img" src="/static/images/form-img.jpg" alt="Booking Image">
+            </div>
+            <div class="booking-form">
+                <form id="form" class="booking-form" th:method="POST" th:action="@{'/bookATable/'+${id} }"
+                      th:object="${bookATable}">
+                    <h2>Booking place for your dinner!</h2>
+                    <div class="form-group form-input">
+                        <input type="text" id="name" th:value="${nameAndSurname}" readonly/>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="select-list">
+                            <select id="time" th:name="time">
+<!--                                <option value="">Time</option>-->
+<!--                                <option value="6pm">6</option>-->
+<!--                                <option >7</option>-->
+                            </select>
+                        </div>
+                    </div>
+
+                    <select class="shape" th:name="foods" id="shape" th:field="*{foods}" style="width: 240px"
+                            multiple>
+                        <option class="opt"
+                                th:each="food:${foods}"
+                                th:title="${food.getName()}"
+                                th:text="${food.getName()}"
+                                th:value="${food.id}">
+                        </option>
+                    </select>
+
+                    <div class="form-radio">
+                        <label class="label-radio"> Select Your Dining Space</label>
+                        <div class="radio-item-list">
+                                <span class="radio-item">
+                                    <input type="radio" th:name="space" value="2" id="number_people_2"/>
+                                    <label for="number_people_2">2</label>
+                                </span>
+                            <span class="radio-item active">
+                                    <input type="radio" th:name="space" value="4" id="number_people_4"
+                                           checked="checked"/>
+                                    <label for="number_people_4">4</label>
+                                </span>
+                            <span class="radio-item">
+                                    <input type="radio" th:name="space" value="6" id="number_people_6"/>
+                                    <label for="number_people_6">6</label>
+                                </span>
+                            <span class="radio-item">
+                                    <input type="radio" th:name="space" value="8" id="number_people_8"/>
+                                    <label for="number_people_8">8</label>
+                                </span>
+                            <span class="radio-item">
+                                    <input type="radio" th:name="space" value="10" id="number_people_10"/>
+                                    <label for="number_people_10">10</label>
+                                </span>
+                        </div>
+
+                    </div>
+                    <div class="form-group form-input">
+                        <input class="fee" th:field="*{feeAmount}" type="number" id="feeAmount" th:value="${feeAmount}" readonly
+                               style="margin-top: -70px"/>
+                    </div>
+
+                    <div class="form-submit">
+                        <input type="submit" value="Book now" class="submit" id="submit" name="submit"/>
+                        <a href="#" class="vertify-booking">Verify your booking info from your phone</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popupM" id="myModal">
+    <div class="popup-content-M">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <p id="money" th:text="${money}"></p>
+    </div>
+</div>
+
+<script>
+    function showPopup() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closePopup() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    // Close the popup when the user clicks outside of the content
+    window.onclick = function(event) {
+        var modal = document.getElementById("myModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+<script th:inline="javascript" th:if="${money} != null">
+    showPopup();
+</script>
+
+<script src="/static/popup/popup.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.option').css('display', 'inline');
+
+        $('#shape').select2({
+            closeOnSelect: false,
+            dropdownParent: $('body'),
+            placeholder: "Select teachers",
+            allowClear: true
+        });
+    });
+
+</script>
+<script>
+    $(document).ready(function () {
+        $("#shape").change(function () {
+            let selectedOptions = $(this).val();
+
+            if (selectedOptions && selectedOptions.length > 0) {
+                for (let foodId of selectedOptions) {
+                    // Make AJAX request for each selected option
+                    $.ajax({
+                        url: "/foodPrice?food=" + foodId,
+                        method: "GET",
+                        success: function (response) {
+                            let currentAmount = parseFloat($("#feeAmount").val() || 0);
+                            let addedAmount = parseFloat(response || 0);
+                            $("#feeAmount").val(currentAmount + addedAmount);
+                        },
+                        error: function (error) {
+                            console.error("Error fetching food price for foodId:", foodId, error);
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/card/card.css">
+
+</head>
+<body>
+<div class="payment-title">
+    <h1>Card Information</h1>
+</div>
+
+<div class="form-container">
+    <div class="field-container">
+        <label for="name">Name Surname</label>
+        <input id="name" maxlength="20" type="text" th:value="${nameAndSurname}" readonly>
+    </div>
+    <div class="field-container">
+        <label for="cardnumber">Card Number</label><span id="generatecard">generate random</span>
+        <input id="cardnumber" name="cardNumber" th:value="${cardNumber}" type="text" pattern="[0-9]*" inputmode="numeric">
+        <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink">
+
+        </svg>
+    </div>
+    <div class="field-container">
+        <label for="expirationdate">Expiration (mm)</label>
+        <input id="expirationdate" th:name="expirationDateMonth" type="text" pattern="[0-9]*" inputmode="numeric">
+    </div>
+    <div class="field-container">
+        <label for="expirationdate">Expiration (yy)</label>
+        <input id="expirationdateYY" th:name="expirationDateYear" type="text" pattern="[0-9]*" inputmode="numeric">
+    </div>
+    <div class="field-container">
+        <label for="securitycode">Security Code</label>
+        <input th:value="${cvv}" th:name="cvv" id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric">
+    </div>
+</div>
+<script src="/static/card/card.js"></script>
+
+</body>
+</html>

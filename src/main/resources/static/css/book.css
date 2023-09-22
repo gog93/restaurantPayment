@@ -1,0 +1,72 @@
+body {
+    font-size: 14px;
+    color: #fff;
+    background: #ffd9b0;
+    font-weight: 400;
+    font-family: auto;
+    margin: 0px;
+}
+.booking-form {
+    order: 1;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.main {
+    padding: 115px 0;
+    position: relative;
+}
+.booking-form{
+    background-color: black;
+    width: 300px;
+}
+.booking-content {
+    display: flex;   /* Set this as a flex container */
+    justify-content: space-between; /* Distributes items evenly */
+    align-items: start; /* Ensure items are aligned to the start */
+}
+.select2-container--default .select2-results__option {
+    color: black;
+}
+.form-group.form-input {
+    margin: 0;
+    padding: 0;
+}
+
+.form-group.form-input input {
+    margin: 0;
+    padding: 0;
+}
+.form-group.form-input {
+    display: flex;
+    align-items: center; /* Vertically centers the input */
+}
+.fee {
+    margin-top: -70px;
+}
+.booking-form, .booking-image {
+    flex: 1; /* Each takes up half of the available space */
+    margin: 0 20px; /* Add some spacing between them */
+}
+
+.form-radio label {
+    padding-top: 4px;
+}
+.label-radio {
+    display: block;
+    margin-bottom: 18px;
+}
+.radio-item-list {
+    margin: 0 -3px;
+}
+.booking-image {
+    width: 58.33%;
+    margin-bottom: -8px;
+}
+.form-radio {
+    margin-bottom: 65px;
+    padding-top: 20px;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}

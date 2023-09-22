@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/popup/popup.css">
+
+</head>
+<body>
+<div th:if=" ${foods}!=null" class="food"  th:each="food:${foods}">
+    <p id="money" th:text="${food.getFoods().getName()}"></p>
+    <a th:href="@{'/pay/'+${userId}+'/'+${food.getFoods().getId()} }">Pay now</a>
+
+</div>
+<div th:if=" ${food}!=null" class="food"  >
+    <h1 id="money" th:text="${food}"></h1>
+    <h1> please go menu and choose foods</h1>
+    <a  th:href="@{'/res/menu/'+${userId} }">Menu</a>
+
+</div>
+<div class="popupM" id="myModal">
+    <div class="popup-content-M">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <p id="money" th:if="${cardMsg} != null " th:text="${cardMsg}"></p>
+        <p id="money" th:if="${cardMsgEnough} !=null" th:text="${cardMsgEnough}"></p>
+        <a th:href="@{'/res?id='+${userId} }">Go home page</a>
+
+    </div>
+</div>
+<script src="/static/popup/popup.js"></script>
+
+<script>
+    function showPopup() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closePopup() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    // Close the popup when the user clicks outside of the content
+    window.onclick = function(event) {
+        var modal = document.getElementById("myModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+<script th:inline="javascript" th:if="${cardMsg} != null or ${cardMsgEnough} !=null ">
+    showPopup();
+</script>
+</body>
+</html>

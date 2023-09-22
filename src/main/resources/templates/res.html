@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/popup/popup.css">
+    <link rel="stylesheet" href="/static/card/card.css">
+    <link rel="stylesheet" href="/static/popup/popup.css">
+
+</head>
+<body>
+<div th:if=" ${admin}!=null" class="error">
+    <input type="hidden" class="form-control"  th:value="${id}" readonly>
+    <div class="content">
+        <button onclick="showPopup()">add food</button>
+    </div>
+    <!-- Popup/Modal -->
+    <div class="popup" id="myModal">
+        <div class="popup-content">
+            <form name="login" th:action="@{/addFood}" th:method="post" th:object="${food}" >
+                <div class="payment-title">
+                    <h4>Add Food</h4>
+                </div>
+
+                <div class="form-container">
+                    <div class="field-container">
+                        <label for="name">Food Name</label>
+                        <input id="name" maxlength="20" type="text" th:name="name" >
+                    </div>
+                    <div class="field-container">
+                        <label for="cardnumber">Card Number</label>
+                        <textarea id="cardnumber"  th:value="${ingredient}" th:name="ingredient" type="text" ></textarea>
+                    </div>
+                    <div class="field-container">
+                        <label for="expirationdate">Price</label>
+                        <input id="expirationdate" th:name="price" type="text" pattern="[0-9]*" inputmode="numeric">
+                    </div>
+
+                </div>
+                <input type="submit" value="Add Food" class="btn btn-block btn-primary">
+
+            </form>
+        </div>
+    </div>
+
+</div>
+<div th:if="${user}!= null or ${admin}!=null" class="error">
+    <a class="sidebar_right_links_item" href="/logout">logout</a>
+</div>
+<div th:if="${user}!= null" class="error">
+    <a class="sidebar_right_links_item" th:href="@{'/bookATable/'+${id} }">Book a table</a>
+    <a class="sidebar_right_links_item" th:href="@{'/res/menu/'+${id} }">Menu</a>
+
+    <div class="content">
+        <button onclick="showPopup()">add card</button>
+    </div>
+    <input type="hidden" class="form-control"  th:value="${id}" readonly>
+
+    <!-- Popup/Modal -->
+    <div class="popup" id="myModal">
+        <div class="popup-content">
+            <form name="login" th:action="@{ ${id} + '/addCard'}" th:method="post" th:object="${card}" >
+                <div class="payment-title">
+                    <h4>Card Information</h4>
+                </div>
+
+                <div class="form-container">
+                    <div class="field-container">
+                        <label for="name">Name Surname</label>
+                        <input id="name" maxlength="20" type="text" th:value="${nameAndSurname}" readonly>
+                    </div>
+                    <div class="field-container">
+                        <label for="cardnumber">Card Number</label>
+                        <input id="cardnumber"  th:value="${cardNumber}"th:name="cardNumber" type="text" >
+                    </div>
+                    <div class="field-container">
+                        <label for="expirationdate">Expiration (mm)</label>
+                        <input id="expirationdate" th:name="expirationDateMonth" type="text" pattern="[0-9]*" inputmode="numeric">
+                    </div>
+                    <div class="field-container">
+                        <label for="expirationdate">Expiration (yy)</label>
+                        <input id="expirationdateYY" th:name="expirationDateYear" type="text" pattern="[0-9]*" inputmode="numeric">
+                    </div>
+                    <div class="field-container">
+                        <label for="securitycode">Security Code</label>
+                        <input th:value="${cvv}" th:name="cvv" id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric">
+                    </div>
+                </div>
+                <input type="submit" value="Save Card" class="btn btn-block btn-primary">
+
+            </form>
+        </div>
+    </div>
+
+</div>
+<div th:if="${user}== null and ${admin}==null" class="error">
+    <a class="sidebar_right_links_item" href="/login">login</a>
+    <a class="sidebar_right_links_item" href="/reg">register</a>
+
+</div>
+
+<script src="/static/popup/popup.js"></script>
+
+</body>
+</html>
