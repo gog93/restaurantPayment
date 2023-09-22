@@ -1,0 +1,24 @@
+Short description
+
+This is a restaurant automation program.
+With this program, the user can reserve a table in the restaurant in advance.
+The user can also order food. From the menu page, he can pre-add it to the cart.
+To order food or reserve a place, he must pay in advance. For payment, he must add a payment card to his page.
+
+Only the admin can add a food to the menu.
+admin page is generated automatically when the program starts working.
+
+Credentials admin
+login- admin@mail.ru
+password- admin
+
+Tools used
+
+programing language- java
+framework- Spring boot
+Spring Security, Spring Data JPA
+Thymeleaf
+Java Script, JQuery, Ajax
+HTML, CSS
+Gradle
+PostgreSql
